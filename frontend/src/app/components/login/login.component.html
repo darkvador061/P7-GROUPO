@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card mt-5 ">
+      <div class="card-header">
+        <h1>Connexion</h1>
+        <img src="../../../assets/images/auth.png" >
+      </div>
+      <div class="card-body">
+        <div class="text-center">
+          <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status" *ngIf="loading"></div>
+        </div>
+        <form [formGroup]="loginForm" *ngIf="!loading">
+          <div class="form-group row">
+            <label for="email" class="col-md-4 col-form-label text-md-right">Adresse email :</label>
+            <div class="col-md-6">
+              <input type="email" id="email" [class.is-invalid]="email.invalid && email.touched" class="form-control" name="email" placeholder="prenom.nom@groupomania.fr" formControlName="email">
+              <p class="text-danger mt-2" [class.d-none]="email.valid || email.untouched">Veuillez saisir une adresse email !</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="password" class="col-md-4 col-form-label text-md-right">Mot de passe :</label>
+            <div class="col-md-6">
+              <input type="password" id="password" [class.is-invalid]="password.invalid && password.touched" class="form-control" name="password" placeholder="*********" formControlName="password">
+              <p class="text-danger mt-2" [class.d-none]="password.valid || password.untouched">Veuillez saisir un mot de passe !</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 offset-md-4">
+            <button class="btn btn-green" (click)="onLogin()" [disabled]="loginForm.invalid">Se connecter</button>
+            <p *ngIf="errorMsg" class="text-danger mt-2">{{ errorMsg }}</p>  
+                    
+          </div>
+         
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

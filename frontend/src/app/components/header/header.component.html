@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-sm navbar-custom">
+  <div class="container-fluid">
+    <img  class="header--logo" src="../../../assets/images/auth.png" alt="Logo de Groupomania">
+    <button class="navbar-toggler" (click)="toggleMenu()"type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div [ngClass]="menu === true ? 'collapse navbar-collapse show' : 'collapse navbar-collapse'" id="navbarCollapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" *ngIf="!auth.loggedIn()">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Connexion</a>
+        </li>
+        <li class="nav-item" *ngIf="!auth.loggedIn()">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">S'inscrire</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.loggedIn()">
+          <a class="nav-link" routerLink="/forum" routerLinkActive="active">Forum</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.loggedIn()">
+          <a class="nav-link" routerLink="/post" routerLinkActive="active">Publier</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.loggedIn()">
+          <a class="nav-link" routerLink="/profile" routerLinkActive="active">Mon profil</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.loggedIn()">
+          <a class="nav-link" style="cursor: pointer;" (click)="onLogout()">Se déconnecter</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

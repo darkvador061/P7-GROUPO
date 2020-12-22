@@ -1,0 +1,30 @@
+<div class="card">
+<div class="text-center mt-5">
+    <div *ngIf="loading" class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
+  </div> 
+ <!-- on vérifie que l'objet user exsite bien -->
+  <div *ngIf="user !== undefined && user !== null" class="row text-center p-3">
+    <div class="col-md-12">
+      <div class="profile-name h2 mt-4">{{ user.firstName }} {{ user.lastName }}</div>
+      <div class="profile-email mb-2 mt-3 mb-4">{{ user.email }}</div>
+      <div class="mb-3">
+        <img class="profile-photo rounded-circle" [src]="user.imageUrl" alt="Photo de profil">
+      </div>
+      <form [formGroup]="profileForm">
+        <label class="profile-select-file" for="profile-file">Changer de photo :</label><br>
+        <input class="profile-file mb-3" type="file" accept=".png, .jpg, .jpeg" #imageInput (change)="onSelectFile(imageInput)">
+      </form>
+      <button *ngIf="imageAsChanged" id="profile-modify" class="btn btn-blue mr-3" (click)="onEditProfile()">Modifier</button>
+      <button id="profile-delete" class="btn btn-danger" (click)="onShowModal()">Supprimer mon profil</button>
+      <div class="overlay" [ngClass]="{ 'hidden': !showModal }" (click)="onCloseModal()">
+        <div class="custom-modal col-md-auto rounded" (click)="onCancelDelete($event)">
+          <p>Voulez-vous supprimer votre profil ?</p>  
+          <div class="text-center">      
+            <button class="btn btn-green mr-3" (click)="onDeleteProfile()">Oui</button>
+            <button class="btn btn-danger" (click)="onCloseModal()">Non</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  

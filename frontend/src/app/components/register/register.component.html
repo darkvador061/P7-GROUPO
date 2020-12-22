@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card mt-5">
+        <div class="card-header">
+          <h1>Inscription</h1>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-2">
+            <div *ngIf="loading" class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
+          </div>
+          <form [formGroup]="registerForm">
+            <div class="form-group row">
+              <label for="firstName" class="col-md-4 col-form-label text-md-right">Prénom :</label>
+              <div class="col-md-6">
+                <input type="text" id="firstName" [class.is-invalid]="firstName.invalid && firstName.touched" class="form-control" name="firstName" placeholder="Prénom" formControlName="firstName">
+                <p class="text-danger mt-2" [class.d-none]="firstName.valid || firstName.untouched">Veuillez saisir un prénom !</p>
+              </div>
+            </div>
+  
+            <div class="form-group row">
+              <label for="lastName" class="col-md-4 col-form-label text-md-right">Nom :</label>
+              <div class="col-md-6">
+                <input type="text" id="lastName" [class.is-invalid]="lastName.invalid && lastName.touched" class="form-control" name="lastName" placeholder="Nom" formControlName="lastName">
+                <p class="text-danger mt-2" [class.d-none]="lastName.valid || lastName.untouched">Veuillez saisir un nom !</p>
+              </div>
+            </div>
+  
+            <div class="form-group row">
+              <label for="email" class="col-md-4 col-form-label text-md-right">Adresse email :</label>
+              <div class="col-md-6">
+                <input type="email" id="email" [class.is-invalid]="email.invalid && email.touched" class="form-control" name="email" placeholder="prenom.nom@groupomania.fr" formControlName="email">
+                <p class="text-danger mt-2" [class.d-none]="email.valid || email.untouched">Veuillez saisir une adresse e-mail !</p>
+              </div>
+            </div>
+  
+            <div class="form-group row">
+              <label for="password" class="col-md-4 col-form-label text-md-right">Mot de passe :</label>
+              <div class="col-md-6">
+                <input type="password" id="password" [class.is-invalid]="password.invalid && password.touched" class="form-control" name="password" placeholder="*********" formControlName="password">
+                <p class="text-danger mt-2" [class.d-none]="password.valid || password.untouched">Veuillez saisir un mot de passe !</p>
+              </div>
+            </div>
+  
+            <div class="form-group row">
+              <label for="confirmPassword" class="col-md-4 col-form-label text-md-right">Confirmez le mot de passe :</label>
+              <div class="col-md-6">
+                <input type="password" id="confirmPassword" [class.is-invalid]="registerForm.errors?.misMatch" class="form-control" name="confirmPassword" placeholder="*********" formControlName="confirmPassword">
+                <p class="text-danger mt-2" *ngIf="registerForm.errors?.misMatch">Les mots de passe ne correspondent pas !</p>
+              </div>
+            </div>
+  
+            <div class="col-md-6 offset-md-4">
+              <button class="btn btn-green" (click)="onRegister()" [disabled]="registerForm.invalid">S'inscrire</button>
+              <p *ngIf="errorMsg" class="text-danger mt-2">{{ errorMsg }}</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

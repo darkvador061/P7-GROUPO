@@ -1,0 +1,23 @@
+.text-muted img{
+  display: flex;
+}
+
+/* mise en forme du texte des posts */
+.card-text {
+  font-size: 18px;
+}
+
+/* affiche les commentaires */
+.show-comments {
+  display: block;
+}
+
+/* cache les commentaires */
+.hide-comments {
+  display: none;
+}
+
+video{
+  max-width: none !important;
+ 
+}

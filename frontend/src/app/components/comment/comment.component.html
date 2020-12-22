@@ -1,0 +1,17 @@
+<div *ngIf="user !== undefined && user !== null && comments !== undefined && comments !== null" class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title"><i>{{ comments.author }}</i></h3>
+          <div class="text-muted h7 mb-4"><i class="fa fa-clock-o"></i>{{ comments.createdAt | dateAgo }}</div>
+          <p class="card-text">{{ comments.comments }}</p>
+        </div>
+        <div class="card-footer">
+          <a (click)="onLike()" [ngClass]="{ active: !liked, disabled: disliked }" class="btn text-white btn-green ml-2 mt-2"><i class="far fa-thumbs-up"></i> {{ likeCount }}</a>
+          <a (click)="onDislike()" [ngClass]="{ active: !disliked, disabled: liked }" class="btn text-white btn-danger ml-2 mt-2"><i class="far fa-thumbs-down"></i> {{ dislikeCount }}</a>
+          <!-- si le commentaire provient du même utilisateur ou que l'utilisateur est administrateur alors on efface le commentaire avec l'id du commentaire -->
+          <a *ngIf="user.isAdmin || user.id === comments.userId" (click)="onDeleteComment()" class="btn btn-outline-danger ml-2 mt-2">Effacer<i class="fas fa-trash"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>

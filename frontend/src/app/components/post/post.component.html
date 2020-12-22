@@ -1,0 +1,65 @@
+
+<div class="row mb-4">
+  <div class=" col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="mr-2">
+              <img class="rounded-circle" width="45" height="45" [src]="posts.User.imageUrl" alt="Photo de profil">
+            </div>
+            <div class="ml-2">
+              <div class="h5 m-0">{{ posts.author }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="text-muted h7 mb-4"><i class="fas fa-user-clock"></i>{{ posts.createdAt | dateAgo }}<img src="../../../assets/images/post.png"></div>
+        <h2 class="card-title">{{ posts.title }}</h2>
+        <!-- on affiche l'image si elle existe sur le post -->
+        <img *ngIf="posts.imageUrl.length > 0 && !isFileImage(posts.imageUrl)" class=" col-sm-12 col-md-8 col-lg-6" [src]="posts?.imageUrl" alt="Image publié par {{ posts.author }}">
+        <!-- on affiche la vidéo si elle existe sur le post -->
+        <video *ngIf="posts.imageUrl.length > 0 && isFileImage(posts.imageUrl)" class="col-sm-12 col-md-8 col-lg-6" controls><source [src]="posts?.imageUrl" type="video/mp4"></video>
+        <p class="card-text">{{ posts.content }}</p>
+      </div>
+      <div class="card-footer">
+        <!-- on active ou désactive le like/dislike -->
+        <a (click)="onLike()" [ngClass]="{ active: !liked, disabled: disliked }" class="btn text-white btn-green ml-2 mt-2"><i class="far fa-thumbs-up"></i> {{ likeCount }}</a>
+        <a (click)="onDislike()" [ngClass]="{ active: !disliked, disabled: liked }" class="btn text-white btn-danger ml-2 mt-2"><i class="far fa-thumbs-down"></i> {{ dislikeCount }}</a>
+        <a (click)="onShowModal()" class="btn btn-blue text-white ml-2 mt-2"><i class="fa fa-plus"></i></a>
+        <a (click)="onShowComment()" class="btn btn-blue text-white ml-2 mt-2"><i class="fa fa-comment-o"></i> {{ posts.Comments.length }} {{ isManyComment() }}</a>
+        <!-- si le post provient du même utilisateur ou quel l'utilisateur est administrateur alors on efface le post avec l'id du post -->
+        <a *ngIf="user.isAdmin || user.id === posts.userId" (click)="onDeletePost()" class="btn btn-danger text-white ml-2 mt-2"><i class="fas fa-trash-alt"></i></a>
+      </div>
+      
+      <!-- on affiche les commentaires si le bouton pour voir les commentaires est cliqué -->
+      <div [class]="showComment === true ? 'show-comments' : 'hide-comments'">
+        <!-- on affiche les commentaires -->
+        <ng-container *ngFor="let comments of posts.Comments">
+          <!-- on envoie les variables user et comment au comment.component -->
+          <app-comment [user]="user" [comments]="comments"></app-comment>
+        </ng-container>
+      </div>
+
+      <!-- on affiche le modal si bouton pour ajouter un commentaire est cliqué -->
+      <div class="overlay" [ngClass]="{ 'hidden': !showModal }" (click)="onCloseModal()">
+        <div class="custom-modal col-md-auto rounded" (click)="onCancelComment($event)">
+          <div class="text-center">
+            <form [formGroup]="commentForm">
+              <h2>Publier un commentaire</h2>
+              <div class="form-group">
+                <label for="comments">Souhaites-tu commenter la publication de {{ posts.author }} ?</label>
+                <textarea name="comments" id="comments" cols="30" rows="6" class="form-control" formControlName="comments"></textarea>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-danger" (click)="onCloseModal()">Annuler</button>
+                <button type="submit" [disabled]="commentForm.invalid" class="btn btn-green ml-3" (click)="onCreateComment()">Publier</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

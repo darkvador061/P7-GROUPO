@@ -1,0 +1,34 @@
+<div id="posts" class="text-center mt-5">
+    <div *ngIf="loading" class="spinner-border" style="width: 3rem; height: 3rem;" role="status"></div>
+  </div>
+  
+  <!-- on vérifie que l'objet user exsite bien -->
+  <div *ngIf="user !== undefined && user !== null && posts !== undefined && posts !== null && loading === false" class="container-fluid mt-4" id="scroller">
+    <div class="row">
+      
+      <div class="col-md-4 ml-md-auto mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="mr-2">
+                  <img class="rounded-circle" width="45" height="45" [src]="user.imageUrl" alt="Photo de profil">
+                </div>
+                <div class="ml-2">
+                  <div class="h5 m-0">{{ user.firstName }} {{ user.lastName }}</div>
+                  <div *ngIf="!this.user.isAdmin" class="h7 text-muted">{{ user.email }}</div>
+                  <div *ngIf="this.user.isAdmin" class="h7 text-muted">Administrateur</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- on affiche tous les posts -->
+    <div  name="post"*ngFor="let post of posts">
+      <!-- on envoie les variables user et post au post.component -->
+      <app-post [user]="user" [posts]="post"></app-post>
+    </div>
+  </div>
